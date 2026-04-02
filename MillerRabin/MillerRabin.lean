@@ -53,9 +53,9 @@ def millerRabinCoreLoop {gen : Type _} [RandomNatGen gen] (g : gen) (n rep : ℕ
   for _ in List.range rep do
     let (a, g') := RandomNatGen.next g 1 (n - 1)
     let b := a ^ k
-    if b == 1 || SPP.millerRabinAux n s b then return true
+    unless b == 1 || SPP.millerRabinAux n s b do return false
     g := g'
-  return false
+  return true
 
 def millerRabin {gen : Type _} [RandomNatGen gen] (g : gen) (n rep : ℕ) : Bool := Id.run do
   if n ≤ 1 then return false
